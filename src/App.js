@@ -1,8 +1,14 @@
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Home from "./components/Home";
+import "./styles/main.scss";
+
 function App() {
   return (
-    <div>
-      <p>Hello</p>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Home} />
+      </Switch>
+    </Router>
   );
 }
 

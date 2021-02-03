@@ -1,0 +1,25 @@
+.connexion_page {
+  text-align: center;
+
+  img {
+    margin: 3rem 0;
+    @media only screen and (max-width: 1024px) {
+      width: 75%;
+      margin: 10rem 0 0 0;
+    }
+  }
+
+  // button {
+  //   width: 13rem;
+  //   height: 3rem;
+  //   background-color: rgb(33, 33, 92);
+  //   color: aliceblue;
+  //   border: 3px solid rgba(255, 255, 0, 0.651);
+  //   border-radius: 1rem;
+  //   // color: white;
+  //   @media only screen and (max-width: 1024px) {
+  //     width: 10rem;
+  //     height: 2rem;
+  //   }
+  // }
+}
