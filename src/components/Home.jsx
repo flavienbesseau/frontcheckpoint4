@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import Api from "../Api";
 
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
@@ -14,6 +15,7 @@ export default function Home() {
 
       <LoginModal />
       <RegisterModal />
+      <Api />
     </div>
   );
 }

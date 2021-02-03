@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -25,12 +27,6 @@ const useStyles = makeStyles((theme) => ({
   titleConnexion: {
     textAlign: "center",
   },
-  // paper: {
-  //   backgroundColor: theme.palette.background.paper,
-  //   border: "2px solid #000",
-  //   boxShadow: theme.shadows[5],
-  //   padding: theme.spacing(2, 4, 3),
-  // },
   form: {
     display: "flex",
     flexDirection: "column",
@@ -41,8 +37,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function LoginModal() {
+  const history = useHistory();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [pseudo, setPseudo] = useState("");
+  const [password, setPassword] = useState("");
+  const [users, setUsers] = useState();
+
+  const handleChangePseudo = (event) => {
+    setPseudo(event.target.value);
+  };
+  const handleChangePassword = (event) => {
+    setPassword(event.target.value);
+  };
 
   const handleOpen = () => {
     setOpen(true);
@@ -50,6 +57,13 @@ export default function LoginModal() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const onClickConnection = () => {
+    axios
+      .get(`http://localhost:5000/api/authentification`)
+      .then((res) => res.data)
+      .then((data) => setUsers(data));
   };
 
   return (
@@ -80,13 +94,21 @@ export default function LoginModal() {
                 Vos identifiants
               </Typography>
               <form className={classes.form} noValidate autoComplete="off">
-                <TextField label="Pseudo" />
-                <TextField className={classes.field} label="Mot de passe" />
+                <TextField label="Pseudo" onChange={handleChangePseudo} />
+                <TextField
+                  className={classes.field}
+                  label="Mot de passe"
+                  onChange={handleChangePassword}
+                />
               </form>
             </CardContent>
 
             <CardActions>
-              <Button variant="contained" color="primary">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={onClickConnection}
+              >
                 Se connecter
               </Button>
             </CardActions>

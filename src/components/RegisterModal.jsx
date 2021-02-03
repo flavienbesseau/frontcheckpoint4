@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -41,8 +44,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function LoginModal() {
+  const history = useHistory();
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+
+  const [pseudo, setPseudo] = useState("");
+  const [password, setPassword] = useState("");
+  const [logged, setLogged] = useState(false);
+
+  const handleChangePseudo = (event) => {
+    setPseudo(event.target.value);
+  };
+  const handleChangePassword = (event) => {
+    setPassword(event.target.value);
+  };
 
   const handleOpen = () => {
     setOpen(true);
@@ -50,6 +65,20 @@ export default function LoginModal() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const onClickRegister = () => {
+    pseudo && password
+      ? axios
+          .post("http://localhost:5000/api/authentification/register", {
+            pseudo: pseudo,
+            password: password,
+          })
+          .then((response) => console.log(response))
+          .then((response) => setLogged(true))
+          .then(() => alert("Compte enregistré"))
+          .then(() => history.push("/dashboard"))
+      : alert("Les 2 champs sont nécessaires");
   };
 
   return (
@@ -80,13 +109,21 @@ export default function LoginModal() {
                 Vos identifiants
               </Typography>
               <form className={classes.form} noValidate autoComplete="off">
-                <TextField label="Pseudo" />
-                <TextField className={classes.field} label="Mot de passe" />
+                <TextField label="Pseudo" onChange={handleChangePseudo} />
+                <TextField
+                  className={classes.field}
+                  label="Mot de passe"
+                  onChange={handleChangePassword}
+                />
               </form>
             </CardContent>
 
             <CardActions>
-              <Button variant="contained" color="primary">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={onClickRegister}
+              >
                 S'inscrire
               </Button>
             </CardActions>

@@ -1,0 +1,15 @@
+.boxesDashboard {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.dashboard {
+  @media only screen and (max-width: 1024px) {
+    text-align: center;
+  }
+  h2 {
+    text-align: center;
+  }
+}
